@@ -1,6 +1,20 @@
 Class Oliver.SQL
 {
 
+ClassMethod ExecuteQueryOneValue(pQuery As %String, ByRef pResult As %String) As %Status
+{
+	Set pResult = ""
+	Set rs = ##class(%ResultSet).%New()
+	Set tSC = rs.Prepare(pQuery)
+	If $$$ISOK(tSC) {
+		Set tSC = rs.Execute()
+		If $$$ISOK(tSC), rs.Next() Set pResult = rs.GetData(1)
+	}
+	Do rs.Close()
+	Set rs = ""
+	Quit tSC
+}
+
 ClassMethod Query1() As %Status
 {
   set query = "SELECT ID, Caption, Href, InitialTimestamp, MedKazId, ProviderName, ResultText FROM Oliver_Epic.TestResult"
