@@ -15,6 +15,16 @@ ClassMethod ExecuteQueryOneValue(pQuery As %String, ByRef pResult As %String) As
 	Quit tSC
 }
 
+ClassMethod GetDateTimeDiff(pTS1 As %String, pTS2 As %String, pTSI As %String = "SQL_TSI_FRAC_SECOND") As %String
+{
+	Set c = ","
+	Set q = "'"
+	Set pQuery = "SELECT {fn TIMESTAMPDIFF("_pTSI_c_q_pTS1_q_c_q_pTS2_q_")}"
+	Set tSC = ..ExecuteQueryOneValue(pQuery,.pResult)
+	Quit $Get(pResult,"<undefined>")
+}
+
+
 ClassMethod Query1() As %Status
 {
   set query = "SELECT ID, Caption, Href, InitialTimestamp, MedKazId, ProviderName, ResultText FROM Oliver_Epic.TestResult"
