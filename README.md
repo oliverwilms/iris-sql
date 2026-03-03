@@ -11,3 +11,7 @@ Table-level object privileges provide access (%ALTER, DELETE, SELECT, INSERT, UP
 ## Granting SQL Privileges
 
 From ObjectScript, use the $SYSTEM.SQL.Security.GrantPrivilege() method to grant specific object privileges to a specified user (or list of users).
+
+## Listing SQL Privileges
+
+From ObjectScript, use the $SYSTEM.SQL.Security.CheckPrivilege() method to determine if a specified user has a specific object privilege.
