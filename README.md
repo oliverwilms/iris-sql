@@ -15,3 +15,7 @@ From ObjectScript, use the $SYSTEM.SQL.Security.GrantPrivilege() method to grant
 ## Listing SQL Privileges
 
 From ObjectScript, use the $SYSTEM.SQL.Security.CheckPrivilege() method to determine if a specified user has a specific object privilege.
+
+## Auditing Privilege Errors
+
+When an InterSystems IRIS process invokes an SQL statement for which the user is not privileged, the operation fails and an SQLCODE –99 error is generated. When the Audit Event %System/%SQL/PrivilegeFailure is enabled, a record will be placed in the Audit database for each SQLCODE -99 error encountered. This Audit database option is disabled by default.
