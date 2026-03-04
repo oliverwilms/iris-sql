@@ -7,6 +7,8 @@ Parameter Priv = "s";
 
 Parameter SqlClass = "HS.Local.VA.eSCM.Feeder.ResponseTime";
 
+Parameter SqlTable = "HS_Local_VA_eSCM_Feeder.ResponseTime";
+
 Parameter Type = "Table";
 
 Parameter User = "eccmon";
@@ -27,6 +29,12 @@ ClassMethod Test1() As %String
     } Else {
         Write "The user does NOT have SELECT privilege on the table."
     }
+    Set result = $System.SQL.Security.CheckPrivilege(..#User,pType,..#SqlTable,..#Priv)
+    If result {
+        Write "The user has privilege on the table."
+    } Else {
+        Write "The user does NOT have SELECT privilege on the table."
+    }
     Quit result
 }
 
@@ -34,6 +42,12 @@ ClassMethod Test2() As %Status
 {
     Set pAction = "SELECT"
     Set tSC = $System.SQL.Security.GrantPrivilege(pAction,..#SqlClass,..#Type,..#User)
+    If $$$ISERR(tSC) {
+        Write $System.Status.GetErrorText(tSC)
+    } Else {
+        Write "Grant OK"
+    }
+    Set tSC = $System.SQL.Security.GrantPrivilege(pAction,..#SqlTable,..#Type,..#User)
     If $$$ISERR(tSC) {
         Write $System.Status.GetErrorText(tSC)
     } Else {
