@@ -25,7 +25,7 @@ ClassMethod Test1() As %String
     Set pType = 1  // 1 for tables
     Set result = $System.SQL.Security.CheckPrivilege(..#User,pType,..#SqlClass,..#Priv)
     If result {
-        Write "The user has privilege on the table.",!
+        Write "The user has privilege on the class.",!
     } Else {
         Write "The user does NOT have SELECT privilege on the class.",!
     }
