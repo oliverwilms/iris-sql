@@ -43,15 +43,15 @@ ClassMethod Test2() As %Status
     Set pAction = "SELECT"
     Set tSC = $System.SQL.Security.GrantPrivilege(pAction,..#SqlClass,..#Type,..#User)
     If $$$ISERR(tSC) {
-        Write $System.Status.GetErrorText(tSC)
+        Write $System.Status.GetErrorText(tSC),!
     } Else {
-        Write "Grant OK"
+        Write "Grant OK",!
     }
     Set tSC = $System.SQL.Security.GrantPrivilege(pAction,..#SqlTable,..#Type,..#User)
     If $$$ISERR(tSC) {
-        Write $System.Status.GetErrorText(tSC)
+        Write $System.Status.GetErrorText(tSC),!
     } Else {
-        Write "Grant OK"
+        Write "Grant OK",!
     }
     Quit tSC
 }
