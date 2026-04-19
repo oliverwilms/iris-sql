@@ -16,6 +16,7 @@ ClassMethod ExecuteQueryOneValue(pQuery As %String, ByRef pResult As %String) As
 }
 
 /// "SELECT ID, Name FROM dc_iris.category WHERE ...
+/// The space after comma is important!
 ClassMethod ExecuteQuerySelect(pQuery As %String, ByRef pResultArray) As %Status
 {
     Try {
@@ -32,14 +33,19 @@ ClassMethod ExecuteQuerySelect(pQuery As %String, ByRef pResultArray) As %Status
         }
         ;
         While rset.%Next() {
+            Set tDataList = ""
             Set tRowCount = rset.%ROWCOUNT
-            Set tID = rset.ID
-            Set index = 2
-            Set tData = rset.%GetData(index)
-            Set pResultArray(tRowCount) = tData
+            //Set tID = rset.ID
+            For index = 1:1:$Length(columns,", ") {
+                Set $LIST(tDataList,index) = rset.%GetData(index)
+            }
+            Set pResultArray(tRowCount) = tDataList
         }
         If (rset.%SQLCODE < 0) {write "%Next failed:", !, "SQLCODE ", rset.%SQLCODE, ": ", rset.%Message quit}
-    } Catch ex {}
+    } Catch ex {
+        zw ex
+        Do BACK^%ETN // Log error in error log
+    }
     Quit $$$OK
 }
 
